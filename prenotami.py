@@ -58,7 +58,8 @@ segundos = int(hora_string.split(':')[2])
 dias_da_semana = dia_da_semana_string.split(' ')
 dias_da_semana_int = processa_dias_da_semana(dias_da_semana)
 
-while True:
+ativo = True
+while ativo:
     agora = datetime.datetime.now()
     print(agora)
 
@@ -70,28 +71,29 @@ while True:
             By.ID, "login-email").send_keys(email)
         navegador.find_element(
             By.ID, "login-password").send_keys(senha)
-        if navegador.find_element(By.ID, "login-email-error").is_displayed():
-            print ("Precisa digitar um email existente")
-            break
-        elif navegador.find_element(By.ID, "login-password-error").is_displayed():
-            print ("Precisa digitar uma senha corretamente")
-            break
-        else:
+        #if navegador.find_element(By.ID, "login-email-error").is_displayed():
+        #    print ("Precisa digitar um email existente")
+        #    break
+        #elif navegador.find_element(By.ID, "login-password-error").is_displayed():
+        #    print ("Precisa digitar uma senha corretamente")
+        #    break
+        #else:
+        navegador.find_element(
+            By.XPATH, '//*[@id="login-form"]/button').click()
+        time.sleep(5)
+        navegador.find_element(By.ID, "advanced").click()
+        time.sleep(2)
+        navegador.find_element(
+            By.XPATH, '//*[@id="dataTableServices"]/tbody/tr[2]/td[4]/a/button').click()
+        time.sleep(2)
+        i = 1
+        ativo = False
+        while navegador.find_element(By.XPATH, '/html/body/div[2]/div[2]/div/div/div/div/div/div/div/div[4]/button') == navegador.find_element(By.XPATH, '/html/body/div[2]/div[2]/div/div/div/div/div/div/div/div[4]/button'):
+            print("Tentativa Nº - " + str(i))
             navegador.find_element(
-                By.XPATH, '//*[@id="login-form"]/button').click()
-            time.sleep(5)
-            navegador.find_element(By.ID, "advanced").click()
+                By.XPATH, '/html/body/div[2]/div[2]/div/div/div/div/div/div/div/div[4]/button').click()
             time.sleep(2)
             navegador.find_element(
                 By.XPATH, '//*[@id="dataTableServices"]/tbody/tr[2]/td[4]/a/button').click()
-            time.sleep(2)
-            i = 1
-            while navegador.find_element(By.XPATH, '/html/body/div[2]/div[2]/div/div/div/div/div/div/div/div[4]/button') == navegador.find_element(By.XPATH, '/html/body/div[2]/div[2]/div/div/div/div/div/div/div/div[4]/button'):
-                print("Tentativa Nº - " + str(i))
-                navegador.find_element(
-                    By.XPATH, '/html/body/div[2]/div[2]/div/div/div/div/div/div/div/div[4]/button').click()
-                time.sleep(2)
-                navegador.find_element(
-                    By.XPATH, '//*[@id="dataTableServices"]/tbody/tr[2]/td[4]/a/button').click()
-                i = i + 1
+            i = i + 1
     time.sleep(1)
