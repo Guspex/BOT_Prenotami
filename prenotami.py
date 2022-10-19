@@ -60,8 +60,6 @@ dias_da_semana_int = processa_dias_da_semana(dias_da_semana)
 
 ativo = True
 while ativo:
-    agora = datetime.datetime.now()
-    print(agora)
 
     if esta_na_hora(hora, minuto, segundos, agora) and esta_no_dia_da_semana(dias_da_semana_int, agora):
         navegador = webdriver.Chrome()
