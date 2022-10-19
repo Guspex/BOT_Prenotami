@@ -66,21 +66,14 @@ while ativo:
     if esta_na_hora(hora, minuto, segundos, agora) and esta_no_dia_da_semana(dias_da_semana_int, agora):
         navegador = webdriver.Chrome()
         navegador.get("https://prenotami.esteri.it")
-        time.sleep(4)
+        time.sleep(3)
         navegador.find_element(
             By.ID, "login-email").send_keys(email)
         navegador.find_element(
             By.ID, "login-password").send_keys(senha)
-        #if navegador.find_element(By.ID, "login-email-error").is_displayed():
-        #    print ("Precisa digitar um email existente")
-        #    break
-        #elif navegador.find_element(By.ID, "login-password-error").is_displayed():
-        #    print ("Precisa digitar uma senha corretamente")
-        #    break
-        #else:
         navegador.find_element(
             By.XPATH, '//*[@id="login-form"]/button').click()
-        time.sleep(5)
+        time.sleep(3)
         navegador.find_element(By.ID, "advanced").click()
         time.sleep(2)
         navegador.find_element(
