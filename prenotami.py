@@ -1,15 +1,15 @@
+from faulthandler import is_enabled
+from multiprocessing.util import is_exiting
 from turtle import isvisible
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 import datetime
 import time
 
-
 def esta_na_hora(hora, minuto, segundos, data_atual):
     if data_atual.hour == hora and data_atual.minute == minuto and data_atual.second == segundos:
         return True
     return False
-
 
 def processa_dias_da_semana(dias_da_semana):
     dias_da_semana_int = []
@@ -28,9 +28,7 @@ def processa_dias_da_semana(dias_da_semana):
             dias_da_semana_int.append(5)
         if dia == "dom":
             dias_da_semana_int.append(6)
-
     return dias_da_semana_int
-
 
 def esta_no_dia_da_semana(dias_da_semana, data_atual):
     if data_atual.weekday() in dias_da_semana:
@@ -38,8 +36,6 @@ def esta_no_dia_da_semana(dias_da_semana, data_atual):
 
     return False
 
-agora = datetime.datetime.now()
-print(agora)
 print("+++++++++++++++++++++++++++++++")
 print("+++++++Agenda Prenot@mi++++++++")
 print("+++++++++++++++++++++++++++++++")
@@ -60,8 +56,10 @@ dias_da_semana_int = processa_dias_da_semana(dias_da_semana)
 
 ativo = True
 while ativo:
-
+    agora = datetime.datetime.now()
+    print(agora)
     if esta_na_hora(hora, minuto, segundos, agora) and esta_no_dia_da_semana(dias_da_semana_int, agora):
+        ativo = False
         navegador = webdriver.Chrome()
         navegador.get("https://prenotami.esteri.it")
         time.sleep(3)
@@ -78,7 +76,6 @@ while ativo:
             By.XPATH, '//*[@id="dataTableServices"]/tbody/tr[2]/td[4]/a/button').click()
         time.sleep(2)
         i = 1
-        ativo = False
         while navegador.find_element(By.XPATH, '/html/body/div[2]/div[2]/div/div/div/div/div/div/div/div[4]/button') == navegador.find_element(By.XPATH, '/html/body/div[2]/div[2]/div/div/div/div/div/div/div/div[4]/button'):
             print("Tentativa Nº - " + str(i))
             navegador.find_element(
@@ -88,3 +85,14 @@ while ativo:
                 By.XPATH, '//*[@id="dataTableServices"]/tbody/tr[2]/td[4]/a/button').click()
             i = i + 1
     time.sleep(1)
+time.sleep(1)
+navegador.find_element(By.ID, 'File_0').click()
+time.sleep(4)
+navegador.find_element(By.ID, 'PrivacyCheck').click()
+navegador.find_element(By.ID, 'btnAvanti').click()
+ativo = True
+while ativo:
+    if navegador.find_element(By.CLASS_NAME, 'day availableDay').is_enabled:
+        navegador.find_element(By.CLASS_NAME, 'day availableDay').click()
+        ativo = False
+navegador.find_element(By.CLASS_NAME, 'table-condensed > dtpicker-next').click()
