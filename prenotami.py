@@ -96,3 +96,4 @@ while ativo:
         navegador.find_element(By.CLASS_NAME, 'day availableDay').click()
         ativo = False
 navegador.find_element(By.CLASS_NAME, 'table-condensed > dtpicker-next').click()
+navegador.find_element(By.ID, 'btnPrenota').click()
