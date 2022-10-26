@@ -1,8 +1,8 @@
-from faulthandler import is_enabled
-from multiprocessing.util import is_exiting
-from turtle import isvisible
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.common.exceptions import TimeoutException
 import datetime
 import time
 
@@ -81,8 +81,12 @@ while ativo:
             navegador.find_element(
                 By.XPATH, '/html/body/div[2]/div[2]/div/div/div/div/div/div/div/div[4]/button').click()
             time.sleep(2)
-            navegador.find_element(
-                By.XPATH, '//*[@id="dataTableServices"]/tbody/tr[2]/td[4]/a/button').click()
+            delay = 5 # segundos
+            try:
+                elemento = WebDriverWait(navegador, delay).until(EC.presence_of_element_located((By.XPATH, '//*[@id="dataTableServices"]/tbody/tr[2]/td[4]/a/button')))
+                elemento.click()
+            except TimeoutException:
+                print ("elemento nao encontrado")
             i = i + 1
     time.sleep(1)
 time.sleep(1)
