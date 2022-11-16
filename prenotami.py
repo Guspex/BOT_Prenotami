@@ -111,6 +111,8 @@ navegador.find_element(
 navegador.find_element(By.ID, 'btnPrenota').click()
 
 
+#Melhoria para o futuro.
+'''
 # Locate the calendar buttons: backwards, month and forward
 loc = navegador.find_element(By.CLASS_NAME, 'calendar')
 
@@ -195,3 +197,4 @@ while no_available_days:
 
             # Print a message
             print('Process succeed!')
+'''
