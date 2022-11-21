@@ -8,7 +8,6 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.alert import Alert
 
-
 def esta_na_hora(hora, minuto, segundos, data_atual):
     if data_atual.hour == hora and data_atual.minute == minuto and data_atual.second == segundos:
         return True
@@ -62,12 +61,15 @@ dias_da_semana = dia_da_semana_string.split(' ')
 dias_da_semana_int = processa_dias_da_semana(dias_da_semana)
 
 ativo = True
+chrome_options = webdriver.ChromeOptions()
+prefs = {"profile.managed_default_content_settings.images": 2}
+chrome_options.add_experimental_option("prefs", prefs)
 while ativo:
     agora = datetime.datetime.now()
     print(agora)
     if esta_na_hora(hora, minuto, segundos, agora) and esta_no_dia_da_semana(dias_da_semana_int, agora):
         ativo = False
-        navegador = webdriver.Chrome()
+        navegador = webdriver.Chrome(chrome_options=chrome_options)
         navegador.get("https://prenotami.esteri.it")
         time.sleep(3)
         navegador.find_element(
