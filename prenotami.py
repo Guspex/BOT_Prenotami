@@ -13,7 +13,6 @@ def esta_na_hora(hora, minuto, segundos, data_atual):
         return True
     return False
 
-
 def processa_dias_da_semana(dias_da_semana):
     dias_da_semana_int = []
     for dia in dias_da_semana:
